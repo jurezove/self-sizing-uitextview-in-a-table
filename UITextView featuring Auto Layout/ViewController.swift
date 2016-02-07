@@ -8,18 +8,37 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view, typically from a nib.
+    tableView.estimatedRowHeight = 50
+    tableView.rowHeight = UITableViewAutomaticDimension
   }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
+  
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 1
   }
-
-
+  
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return 5
+  }
+  
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+    let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! MyCell
+    cell.textView.delegate = self
+    return cell
+  }
 }
 
+extension ViewController: UITextViewDelegate {
+  func textViewDidChange(textView: UITextView) {
+    tableView.beginUpdates()
+    tableView.endUpdates()
+  }
+}
+
+// A simple custom cell we're using so we can set text view's delegate 💪
+class MyCell: UITableViewCell {
+  @IBOutlet weak var textView: UITextView!
+}
