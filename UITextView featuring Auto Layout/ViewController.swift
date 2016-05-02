@@ -33,8 +33,12 @@ class ViewController: UITableViewController {
 
 extension ViewController: UITextViewDelegate {
   func textViewDidChange(textView: UITextView) {
+    let currentOffset = tableView.contentOffset
+    UIView.setAnimationsEnabled(false)
     tableView.beginUpdates()
     tableView.endUpdates()
+    UIView.setAnimationsEnabled(true)
+    tableView.setContentOffset(currentOffset, animated: false)
   }
 }
 
